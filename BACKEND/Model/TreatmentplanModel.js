@@ -57,7 +57,7 @@ const TreatmentplanSchema = new Schema(
 );
 
 /* -------------------------- indexes / uniqueness -------------------------- */
-// Ensure planCode is unique *within* a patient
+// Ensure planCode is unique **within** a patient
 TreatmentplanSchema.index({ patientCode: 1, planCode: 1 }, { unique: true });
 
 /* -------------------------- planCode auto-generation -------------------------- */
@@ -67,13 +67,25 @@ TreatmentplanSchema.pre("save", async function (next) {
 
     // Only generate when creating a new doc and planCode not set
     if (this.isNew && !this.planCode) {
-      const scope = `tplan:${this.patientCode}`; // per-patient counter scope
+      // Use dentistCode for global counter instead of per-patient
+      const scope = `tplan:${this.dentistCode}`; // Global counter per dentist
+
+      // If all plans were deleted for this dentist, reset counter so we start at TP-001 again
+      const existingCount = await this.constructor.countDocuments({ dentistCode: this.dentistCode });
+      if (existingCount === 0) {
+        await Counter.findOneAndUpdate(
+          { scope },
+          { $set: { seq: 0 } },
+          { upsert: true }
+        );
+      }
+
       const c = await Counter.findOneAndUpdate(
         { scope },
         { $inc: { seq: 1 } },
         { upsert: true, new: true }
       );
-      this.planCode = `TP-${pad(c.seq, 3)}`; // e.g., TP-001
+      this.planCode = `TP-${pad(c.seq, 3)}`; // e.g., TP-001, TP-002, TP-003...
     }
 
     next();
