@@ -1,0 +1,103 @@
+:root {
+  --nav-color: #1d4ed8; /* navbar primary */
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0b1220;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  background: var(--nav-color);
+  color: #fff;
+}
+.top-nav .brand {
+  font-weight: 700;
+}
+.top-nav .spacer { flex: 1; }
+.top-nav .nav-btn {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-wrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 24px 12px;
+}
+
+.login-container {
+  width: 400px;
+  padding: 30px;
+  background-color: #121c2b;
+  border-radius: 8px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* Heading */
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color:white;
+}
+
+/* Labels */
+.login-container label {
+  font-weight: 600;
+  color:white;
+}
+
+/* Inputs and Textarea */
+.login-container input[type="email"],
+.login-container input[type="password"]
+ {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: 0.2s border-color ease-in-out;
+}
+
+/* Button */
+.login-container button {
+  width: 100%;
+  background-color: var(--nav-color);
+  color: white;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease background;
+  
+}
+
+.login-container button:hover {
+  background-color: #1e40af;
+}
+
+.login-meta {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.login-meta a { color: #60a5fa; cursor: pointer; text-decoration: underline; }
